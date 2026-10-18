@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Karla Vasquez | Software Engineer</title>
+  <meta name="description" content="Karla Vasquez: Computer Engineering and Computer Science graduate exploring software, AI, cloud, and user-centered technology.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Karla Vasquez | Software Engineer">
+  <meta property="og:description" content="Building thoughtful technology at the intersection of software, AI, and education.">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Serif+Display&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Runs before first paint so the saved (or system) theme is applied with no flash.
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem("theme"); } catch (e) {}
+      var dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.dataset.theme = saved || (dark ? "dark" : "light");
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main-links">Skip to links</a>
+  <main class="page">
+    <div class="topbar">
+      <button class="icon-button" id="theme-toggle" type="button"></button>
+    </div>
+
+    <header class="profile">
+      <div class="avatar-wrap reveal" style="--i:0">
+        <div class="avatar" id="avatar" role="img" aria-label="Profile monogram"></div>
+        <span id="sparkle"></span>
+      </div>
+      <p class="greeting reveal" id="greeting" style="--i:1"></p>
+      <h1 id="name" class="reveal" style="--i:1"></h1>
+      <p class="headline reveal" id="headline" style="--i:2"></p>
+      <p class="bio reveal" id="bio" style="--i:2"></p>
+      <p class="status reveal" style="--i:3"><span class="status-dot" aria-hidden="true"></span><span id="learning"></span></p>
+      <div class="socials reveal" id="socials" style="--i:3"></div>
+      <button class="email-button" id="copy-email" type="button" hidden>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
+        <span id="copy-label">Copy email</span>
+      </button>
+      <p class="copy-status" id="copy-status" role="status"></p>
+    </header>
+
+    <nav aria-label="Main links">
+      <ul class="link-list" id="main-links" tabindex="-1"></ul>
+    </nav>
+
+    <section class="more" aria-labelledby="more-heading">
+      <h2 id="more-heading">A little more about what I build</h2>
+      <ul class="link-list" id="project-links"></ul>
+    </section>
+
+    <footer>&copy; <span id="year"></span> Karla Vasquez</footer>
+    <p class="sr-only" id="theme-status" role="status"></p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
