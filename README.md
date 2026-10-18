@@ -42,6 +42,14 @@ I built it with plain HTML, CSS, and JavaScript. I'm newer to React, and I'd rat
 - **`localStorage` can fail.** Private browsing or blocked storage can throw an error, so every read and write is wrapped in `try/catch`. The toggle still works; it just won't persist.
 - **Accessibility details.** The button's `aria-label` changes between "Switch to dark mode" and "Switch to light mode", and a hidden live region announces "Dark mode on." so screen-reader users get feedback for a change they can't see.
 
+### Two smaller JavaScript touches
+
+The theme toggle is my main feature. These two are small additions that support it.
+
+**Time-of-day greeting.** A short line above my name reads "Good morning, I'm", "Good afternoon, I'm", or "Good evening, I'm" based on the visitor's local time. It's one small function that reads `new Date().getHours()`, and it runs in the visitor's browser, so it uses their time zone, not mine.
+
+**Copy-email button.** When an email is set in the config, a button copies it to the clipboard and shows a "Copied" confirmation, announced to screen readers too. Clipboard access can be blocked (for example on an insecure page or if permission is denied), so if copying fails the page shows my email address as text instead of failing silently. The button stays hidden until an email is configured, so it never appears broken.
+
 ## Keyboard and accessibility details
 
 I wanted keyboard and screen-reader users to feel considered, not just supported.
