@@ -1,6 +1,6 @@
 # Karla Vasquez | Personal Linktree
 
-**Live site:** [ADD YOUR GITHUB PAGES URL HERE]
+**Live site:** https://kdvasquez.github.io/linktree/
 
 A single-page, Linktree-style profile that collects my LinkedIn, portfolio, résumé, and GitHub in one place. I wanted it to feel like a page from a curated digital journal rather than a generic template, so it uses an editorial serif for headlines, a soft rose palette, and plenty of whitespace.
 
@@ -15,8 +15,8 @@ I built it with plain HTML, CSS, and JavaScript. I'm newer to React, and I'd rat
 
 ## Features
 
-- Profile section with a photo (or monogram fallback), headline, bio, and a "currently learning" note
-- Link cards built from a single config array, so adding a link is one line
+- Profile section with a photo (or "KV" monogram fallback if the image fails to load), headline, bio, and a "currently learning" note
+- Link cards and a "A little more about what I build" section, both built from config arrays in `script.js`, so adding a link is one line
 - Dark/light theme toggle that remembers your choice (the main JS feature, described below)
 - Time-of-day greeting ("Good morning, I'm...") based on the visitor's local time
 - Optional copy-email button with success and error feedback
@@ -35,6 +35,8 @@ I built it with plain HTML, CSS, and JavaScript. I'm newer to React, and I'd rat
 1. All colors are CSS variables on `:root`. Dark mode overrides them with `:root[data-theme="dark"]`, so no component needs its own dark styles.
 2. Clicking the button flips `data-theme` on the `<html>` element and saves the choice to `localStorage`.
 3. A tiny inline script in the `<head>` reads the saved value (or the system preference) before the page paints.
+
+**With more time I'd improve:** add a third "follow my system" option, since right now a visitor who picks a theme keeps it even if their system changes later.
 
 **The tricky parts:**
 
@@ -59,22 +61,40 @@ I wanted keyboard and screen-reader users to feel considered, not just supported
 - **Semantics:** landmarks (`main`, `nav`, `header`, `footer`), one `h1`, a logical heading order, and descriptive labels on icon-only buttons.
 - **Links and touch targets:** external links use `rel="noopener noreferrer"` and icon buttons are 44x44px.
 - **Motion:** animations only use opacity and transform, and are disabled under `prefers-reduced-motion`.
-- **Not color-only:** link cards that are missing a URL say so in text, not just with a dashed border.
+- **Profile photo:** the photo has descriptive alt text, and the monogram fallback is labeled for screen readers too.
+- **Not color-only:** a link card with no URL says "URL not set yet" in text, not just with a dashed border.
+
+## How the page is responsive
+
+I used a fluid, single-column layout instead of width breakpoints (`@media` rules). Because the content is one narrow column, the layout adapts on its own, and there's no separate "desktop" and "mobile" version to keep in sync.
+
+- **Viewport meta tag.** `width=device-width, initial-scale=1` in `index.html` tells phones to use their real screen width. Without it, a phone would draw the page zoomed out like a tiny desktop site.
+- **A narrow, centered column.** `.page` has `max-width: 36rem` (about 576px) and `margin: 0 auto`. On a phone it fills the screen minus side padding. On a laptop it stops growing and centers, so the cards never stretch across a wide monitor.
+- **Cards fill the column.** `.link-list` is a CSS grid with one column and a gap, so every card takes the full available width. Nothing has a fixed pixel width.
+- **Type that scales with the screen.** The name uses `clamp(2.5rem, 11vw, 3.5rem)`, which means "scale with the screen width, but never go below 40px or above 56px." That keeps it from overflowing at 320px and from looking oversized on desktop.
+- **Text wraps instead of overflowing.** `min-width: 0` on `.link-text` lets long descriptions wrap inside a flex card, and the "currently learning" pill has `max-width: 100%`.
+- **Relative units.** Spacing and font sizes use `rem`, so everything scales with a visitor's own font-size settings.
+- **Touch-friendly sizes.** Buttons are 44px and link cards are at least 72px tall, so they're easy to tap.
+- **Phone notches.** `env(safe-area-inset-*)` padding keeps content clear of the notch and home bar on newer phones.
+
+I checked for horizontal scrolling at 320, 390, 768, and 1280px. If I added more content later (a photo gallery, say), I'd add real breakpoints at that point.
 
 ## Running it locally
 
-No build step or dependencies. Keep `index.html`, `style.css`, and `script.js` in the same folder, then open `index.html` in a browser. Fonts load from Google Fonts, so you need an internet connection to see them.
+No build step or dependencies. Keep `index.html`, `style.css`, `script.js`, `profile.jpg`, and `kdvasquez_resume.pdf` in the same folder, then open `index.html` in a browser. Fonts load from Google Fonts, so you need an internet connection to see them.
 
 ## Deploying to GitHub Pages
 
 This is a static site, so no build is needed.
 
-1. Push the files to the root of a public GitHub repository.
+My portfolio already uses the root GitHub Pages address (`kdvasquez.github.io`), so this project lives in its own repository and deploys as a project site under `/linktree/`.
+
+1. Push the files to the root of the public `linktree` repository.
 2. In the repo, go to **Settings > Pages**.
 3. Under **Build and deployment**, set **Source** to **Deploy from a branch**, choose `main` and `/ (root)`, and save.
-4. Wait a minute or two, then visit `https://YOUR-USERNAME.github.io/YOUR-REPO/`.
+4. Wait a minute or two, then visit https://kdvasquez.github.io/linktree/.
 
-Everything uses relative paths, so it works under a repository subpath.
+Everything uses relative paths, so it works under the `/linktree/` subpath. Each push to `main` redeploys the site.
 
 ## Configuring your own content
 
@@ -84,20 +104,13 @@ Everything lives in the config block at the top of `script.js`:
 - Set the Portfolio and Résumé `url` fields in `MAIN_LINKS`.
 - Set `email` to show the copy-email button.
 - Set `imagePath` to a photo in the same folder (otherwise a monogram shows).
-- Delete any `PROJECTS` entries you can't back up.
+- Put your résumé PDF in the same folder and point the Résumé `url` at its filename.
+- Edit or delete entries in `PROJECTS`; each one has its own `url`.
 
 Cards with no URL render as a non-clickable "URL not set yet" placeholder, so nothing ever links to a fake page.
 
-After deploying, I'd also add `og:url` and an `og:image` (a 1200x630 preview image) to the `<head>` so link previews on LinkedIn and Slack look polished. Both need the final live URL, so I left them out for now instead of using a placeholder.
+The `<head>` includes basic Open Graph tags (title, description, type) for link previews. I haven't added `og:image` or `og:url` yet. Both need a finished preview image and the final live URL, and I'd rather leave them out than point at a placeholder.
 
-## How I checked it
-
-<!-- Fill in only what you personally ran, so the README is honest. -->
-
-- Layouts at 320, 390, 768, and 1280px: [CONFIRM]
-- Theme persistence across refresh, and first-visit system preference: [CONFIRM]
-- Keyboard-only walkthrough (Tab order, skip link, focus styles): [CONFIRM]
-- Lighthouse (Performance / Accessibility / Best Practices / SEO): [ADD SCORES]
 
 ## Known limitations and what I'd do next
 
@@ -105,4 +118,4 @@ After deploying, I'd also add `og:url` and an `og:image` (a 1200x630 preview ima
 - The theme is only two states. A third "follow my system" option would be a nicer fit for people who change themes through the day.
 - Fonts come from Google Fonts, so they add a network request. Self-hosting them would be faster and more private.
 - The page re-renders its link cards with JavaScript, so a visitor with JS disabled sees an empty list. For a page this small I accepted that tradeoff, but pre-rendering the HTML would be more robust.
-- I'd add a proper `og:image` and set up automated accessibility checks.
+- Learn React :)

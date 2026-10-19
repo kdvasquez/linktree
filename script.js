@@ -117,7 +117,12 @@ function renderProfile() {
     const img = new Image();
     img.alt = `Portrait of ${PROFILE.name}`;
     img.width = img.height = 120; // reserves space so nothing shifts on load
-    img.onload = () => avatar.replaceChildren(img);
+    img.onload = () => {
+      // The container's monogram label would hide the photo's alt text from screen readers.
+      avatar.removeAttribute("role");
+      avatar.removeAttribute("aria-label");
+      avatar.replaceChildren(img);
+    };
     img.src = PROFILE.imagePath; // on error the monogram simply stays
   }
 
