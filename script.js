@@ -4,7 +4,7 @@ const PROFILE = {
   headline: "Software Engineer | AI, Cloud & User-Centered Technology",
   bio: "Building thoughtful technology at the intersection of software, AI, and education. Always learning, creating, and exploring what’s possible.",
   learning: "Currently learning: AI, cloud & user-centered tech",
-  imagePath: "",   // e.g. "profile.jpg"
+  imagePath: "profile.jpg",   // e.g. "profile.jpg"
   email: "kdvasque@gmail.com",       // shows a copy-email button when set
   linkedin: "https://www.linkedin.com/in/kdvasquez/",
   github: "https://github.com/kdvasquez",
