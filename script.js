@@ -13,7 +13,7 @@ const PROFILE = {
 const MAIN_LINKS = [
   { icon: "linkedin", title: "LinkedIn", desc: "Let’s connect professionally.", url: PROFILE.linkedin },
   { icon: "portfolio", title: "Portfolio", desc: "Explore my projects and things I’ve built.", url: "https://kdvasquez.github.io/" },
-  { icon: "resume", title: "Résumé", desc: "My experience, skills, and technical background.", url: "" },
+  { icon: "resume", title: "Résumé", desc: "My experience, skills, and technical background.", url: "kdvasquez_resume.pdf" },
   { icon: "github", title: "GitHub", desc: "Explore my code and projects.", url: PROFILE.github },
 ];
 
